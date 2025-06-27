@@ -121,6 +121,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Open Source Community**: Thanks to all contributors and users who help improve this project
 - **LLM Providers**: OpenAI and Anthropic for their powerful language models
 
+### 🔒 Privacy
+
+Smart Web Refactor respects your privacy:
+- **100% Local**: All operations happen locally in your browser
+- **No Data Collection**: We don't collect any user data
+- **Your LLM Keys**: You use your own API keys
+- **Open Source**: Fully auditable code
+
+Read our full [Privacy Policy](PRIVACY.md) for details.
+
 ### 📞 Support
 
 - **Issues**: [GitHub Issues](https://github.com/zxdxjtu/web-refactor/issues)
@@ -241,6 +251,16 @@ cd web-refactor
 - **Claude Code 和 Anthropic**: 本项目 95% 使用 Claude Code（Anthropic 的 AI 驱动开发环境）开发
 - **开源社区**: 感谢所有帮助改进这个项目的贡献者和用户
 - **LLM 提供商**: 感谢 OpenAI 和 Anthropic 提供强大的语言模型
+
+### 🔒 隐私保护
+
+Smart Web Refactor 尊重您的隐私：
+- **100% 本地运行**：所有操作都在您的浏览器中本地进行
+- **不收集数据**：我们不收集任何用户数据
+- **使用您自己的 API 密钥**：您使用自己的 API 密钥
+- **开源透明**：代码完全可审计
+
+详情请阅读我们的[隐私政策](PRIVACY.md)。
 
 ### 📞 支持
 
