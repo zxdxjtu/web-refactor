@@ -1,4 +1,4 @@
-# Smart Web Refactor | 智能网页重构
+# LLM-based Web Refactor | 智能网页重构
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-brightgreen.svg)](https://chrome.google.com/webstore)
