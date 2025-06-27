@@ -1,0 +1,52 @@
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Claude Code settings
+.claude/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node modules (if any)
+node_modules/
+
+# Python virtual environment
+venv/
+env/
+.env
+
+# Temporary files
+*.tmp
+*.temp
+
+# Extension build files (if any)
+dist/
+build/
+
+# Personal configuration files
+config.local.json
+.secrets/
+
+# Chrome extension development
+*.pem
+*.crx
+*.zip
+
+# Test files with personal data
+test_personal_*

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="common.appName">Smart Web Refactor</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 data-i18n="popup.title">Smart Web Refactor</h1>
+        </header>
+        
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="main" data-i18n="popup.tabs.main">Refactor</button>
+                <button class="tab-btn" data-tab="settings" data-i18n="popup.tabs.settings">Settings</button>
+            </div>
+            
+            <div class="tab-content" id="main-tab">
+
+                <div class="user-input">
+                    <div class="input-header">
+                        <label for="user-prompt" data-i18n="popup.main.userPromptLabel">Describe your refactor needs:</label>
+                        <button id="history-btn" class="history-btn" title="View history" data-i18n-title="popup.main.historyTitle">📜</button>
+                    </div>
+                    <textarea id="user-prompt" data-i18n-placeholder="popup.main.userPromptPlaceholder"></textarea>
+                    <div id="history-dropdown" class="history-dropdown" style="display: none;">
+                        <div class="history-header">
+                            <span data-i18n="popup.main.history.title">历史需求</span>
+                            <button id="clear-history-btn" class="clear-history-btn" data-i18n="popup.main.history.clearAll">清空</button>
+                        </div>
+                        <div id="history-list" class="history-list">
+                            <!-- History items will be populated here -->
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="preset-options">
+                    <label data-i18n="popup.main.presetsLabel">Quick Templates:</label>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-preset="reader" data-i18n="popup.main.presets.reader">Reader Mode</button>
+                        <button class="preset-btn" data-preset="minimal" data-i18n="popup.main.presets.minimal">Minimal Mode</button>
+                        <button class="preset-btn" data-preset="article" data-i18n="popup.main.presets.article">Article Focus</button>
+                        <button class="preset-btn" data-preset="clean" data-i18n="popup.main.presets.clean">Clean Ads</button>
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <button id="refactor-btn" class="primary-btn" data-i18n="popup.main.startRefactor">Start Refactor</button>
+                    <button id="reset-btn" class="secondary-btn" data-i18n="popup.main.resetPage">Restore Original</button>
+                </div>
+                
+                <div class="domain-memory-section">
+                    <div class="memory-actions">
+                        <button id="save-domain-config" class="memory-btn" data-i18n="popup.main.saveDomainConfig">💾 Save Memory</button>
+                        <button id="view-domain-memories" class="memory-btn secondary" data-i18n="popup.main.viewMemories">📋 View Memories</button>
+                    </div>
+                    <div class="domain-status" id="domain-status" style="display: none;">
+                        <span class="domain-name" id="current-domain-name"></span>
+                        <span class="saved-indicator" data-i18n="popup.main.configSaved">✅ Config Saved</span>
+                    </div>
+                </div>
+                
+                
+                <div class="status" id="status">
+                    <div class="status-text" data-i18n="popup.main.status.ready">Ready</div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="memories-tab" style="display: none;">
+                <div class="memories-section">
+                    <div class="memories-header">
+                        <h3 data-i18n="popup.memories.title">Domain Memories</h3>
+                        <button id="back-to-main" class="secondary-btn" data-i18n="popup.memories.backToMain">← Back</button>
+                    </div>
+                    
+                    <div id="memories-list" class="memories-list">
+                        <!-- Domain memories will be populated here -->
+                    </div>
+                    
+                    <div class="memories-actions">
+                        <button id="clear-all-memories" class="danger-btn" data-i18n="popup.memories.clearAll">Clear All Memories</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="settings-tab" style="display: none;">
+                <div class="settings-section">
+                    <h3 data-i18n="popup.settings.llmConfig">LLM Configuration</h3>
+                    
+                    <div class="form-group">
+                        <label for="llm-provider" data-i18n="popup.settings.provider">Model Provider:</label>
+                        <select id="llm-provider">
+                            <option value="openai" data-i18n="popup.settings.providers.openai">OpenAI</option>
+                            <option value="anthropic" data-i18n="popup.settings.providers.anthropic">Anthropic</option>
+                            <option value="custom" data-i18n="popup.settings.providers.custom">Custom</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="api-url" data-i18n="popup.settings.apiUrl">API URL:</label>
+                        <input type="url" id="api-url" placeholder="https://api.openai.com/v1/chat/completions">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="api-key" data-i18n="popup.settings.apiKey">API Key:</label>
+                        <input type="password" id="api-key" data-i18n-placeholder="popup.settings.apiKey" value="">
+                        <small data-i18n="popup.settings.apiKeyHint">Your API key will be stored securely locally</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="model-name" data-i18n="popup.settings.modelName">Model Name:</label>
+                        <input type="text" id="model-name" placeholder="gpt-3.5-turbo">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="max-tokens" data-i18n="popup.settings.maxTokens">Max Tokens:</label>
+                        <input type="number" id="max-tokens" value="2000" min="100" max="8000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="proxy-url">Proxy URL (optional):</label>
+                        <input type="text" id="proxy-url" placeholder="http://127.0.0.1:63489">
+                        <small>Leave empty to disable proxy. Format: http://host:port</small>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3 data-i18n="popup.settings.otherSettings">Other Settings</h3>
+                    
+                    <div class="form-group">
+                        <label for="language" data-i18n="popup.settings.language">Language:</label>
+                        <select id="language">
+                            <option value="en" data-i18n="popup.settings.languages.en">English</option>
+                            <option value="zh" data-i18n="popup.settings.languages.zh">中文</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="enable-auto-refactor">
+                            <span data-i18n="popup.settings.enableAutoRefactor">Enable Auto Refactor</span>
+                        </label>
+                        <small data-i18n="popup.settings.autoRefactorHint">Automatically apply refactor when visiting saved domains</small>
+                    </div>
+                    
+                    
+                </div>
+                
+                
+                <div class="actions">
+                    <button id="save-settings" class="primary-btn" data-i18n="popup.settings.saveSettings">Save Settings</button>
+                    <button id="test-connection" class="secondary-btn" data-i18n="popup.settings.testConnection">Test Connection</button>
+                </div>
+                
+                <div class="settings-result" id="settings-result" style="display: none;">
+                    <div class="settings-result-content" id="settings-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="i18n.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extension Test Page</title>
+</head>
+<body>
+    <h1>Extension Test Page</h1>
+    <p>This is a simple test page to verify content script injection.</p>
+    
+    <div id="test-content">
+        <h2>Test Content</h2>
+        <p>Some content that can be refactored.</p>
+        <button onclick="alert('Button clicked!')">Test Button</button>
+    </div>
+    
+    <script>
+        console.log('Test page loaded');
+        
+        // Add some debug info
+        window.addEventListener('load', () => {
+            console.log('Window loaded event fired');
+            console.log('Document ready state:', document.readyState);
+        });
+        
+        // Listen for extension activity
+        setTimeout(() => {
+            if (window.webRefactorContent) {
+                console.log('✅ Content script detected!');
+            } else {
+                console.log('❌ Content script not found');
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

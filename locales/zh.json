@@ -1,0 +1,166 @@
+{
+  "common": {
+    "appName": "智能网页重排器",
+    "loading": "加载中...",
+    "success": "成功",
+    "error": "错误",
+    "warning": "警告",
+    "info": "信息",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "test": "测试",
+    "reset": "重置",
+    "close": "关闭",
+    "settings": "设置"
+  },
+  "popup": {
+    "title": "智能网页重排器",
+    "tabs": {
+      "main": "重排",
+      "settings": "设置"
+    },
+    "main": {
+      "userPromptLabel": "描述您的重排需求：",
+      "userPromptPlaceholder": "例如：移除广告，整理文章内容，简化布局，突出主要内容...",
+      "presetsLabel": "快速模板：",
+      "presets": {
+        "reader": "阅读模式",
+        "minimal": "极简模式",
+        "article": "文章专注",
+        "clean": "清理广告"
+      },
+      "startRefactor": "开始重排",
+      "resetPage": "恢复原状",
+      "saveDomainConfig": "💾 保存记忆",
+      "configSaved": "✅ 配置已保存",
+      "saveMemory": "💾 保存记忆",
+      "applyMemory": "🚀 应用记忆",
+      "viewMemories": "📋 查看记忆",
+      "memoryHint": "将当前修改保存为域名记忆，供下次使用",
+      "memoryStatus": "记忆状态",
+      "memoryAvailable": "✅ 记忆可用",
+      "memoryNotFound": "❌ 未找到记忆",
+      "historyTitle": "查看历史需求",
+      "history": {
+        "title": "历史需求",
+        "clearAll": "清空",
+        "empty": "暂无历史记录"
+      },
+      "status": {
+        "ready": "就绪",
+        "analyzing": "正在分析页面...",
+        "processing": "正在处理LLM...",
+        "executing": "正在执行命令...",
+        "completed": "重排完成！",
+        "restored": "页面已恢复",
+        "restoring": "正在恢复页面..."
+      }
+    },
+    "settings": {
+      "llmConfig": "LLM配置",
+      "provider": "模型提供商：",
+      "providers": {
+        "openai": "OpenAI",
+        "anthropic": "Anthropic",
+        "custom": "自定义"
+      },
+      "apiUrl": "API地址：",
+      "apiKey": "API密钥：",
+      "apiKeyHint": "密钥将安全存储在本地",
+      "modelName": "模型名称：",
+      "maxTokens": "最大Token数：",
+      "screenshotQuality": "截图质量：",
+      "qualityOptions": {
+        "low": "低（更快）",
+        "medium": "中等",
+        "high": "高（更慢）"
+      },
+      "otherSettings": "其他设置",
+      "preserveImages": "保留图片",
+      "preserveLinks": "保留链接",
+      "autoDetectContent": "自动检测主要内容",
+      "language": "语言：",
+      "languages": {
+        "en": "English",
+        "zh": "中文"
+      },
+      "enableAutoRefactor": "启用自动重排",
+      "autoRefactorHint": "访问已保存配置的域名时自动应用重排",
+      "enableDomainMemory": "启用域名记忆",
+      "domainMemoryHint": "重新访问相同域名时自动重排",
+      "autoRefactor": "页面加载时自动重排",
+      "autoRefactorHint": "页面加载时自动应用上次设置",
+      "memorySettings": "记忆设置",
+      "enableSmartMemory": "启用智能记忆",
+      "smartMemoryHint": "自动保存和应用特定域名的修改方案",
+      "memoryRetentionDays": "记忆保存天数：",
+      "maxMemoryEntries": "每个域名最大记忆条数：",
+      "clearAllMemory": "清除所有记忆",
+      "saveSettings": "保存设置",
+      "testConnection": "测试连接",
+      "testing": "正在测试连接...",
+      "settingsSaved": "设置已保存",
+      "saveFailed": "保存失败",
+      "connectionSuccess": "连接成功！",
+      "connectionFailed": "连接失败"
+    }
+  },
+  "memories": {
+    "title": "域名记忆管理",
+    "backToMain": "← 返回",
+    "clearAll": "清除所有记忆",
+    "emptyMessage": "暂无保存的记忆",
+    "emptyHint": "使用重构功能后，可以保存域名记忆",
+    "applyMemory": "应用",
+    "deleteMemory": "删除",
+    "confirmClearAll": "确定要清除所有域名记忆吗？",
+    "confirmDelete": "确定要删除此记忆吗？",
+    "memoryCleared": "记忆已清除",
+    "memoryDeleted": "记忆已删除",
+    "memoryApplied": "记忆已应用"
+  },
+  "background": {
+    "unsupportedPage": "不支持的页面类型: {url}\n\n支持的页面类型:\n• http:// 和 https:// 网页\n• file:// 本地文件\n\n不支持:\n• chrome:// 浏览器内部页面\n• chrome-extension:// 扩展页面\n• edge:// 或其他浏览器内部页面",
+    "configurationMissing": "请先在设置中配置LLM API信息",
+    "extractionFailed": "页面内容提取失败",
+    "executionFailed": "重排命令执行失败",
+    "llmProcessingFailed": "LLM处理失败",
+    "cannotRunOnPage": "无法在此页面上运行扩展",
+    "noOriginalState": "没有找到原始页面状态，请刷新页面后重试",
+    "restoreSuccess": "页面已恢复到原始状态",
+    "restoreFailed": "恢复原始状态失败，请刷新页面",
+    "apiConnectionFailed": "API连接失败",
+    "commandParsingFailed": "命令解析失败",
+    "invalidJsonResponse": "响应中未找到有效的JSON",
+    "invalidCommandFormat": "操作命令格式错误：缺少type或selector",
+    "apiRequestFailed": "API请求失败 ({status}): {error}",
+    "abnormalResponseFormat": "LLM响应格式异常"
+  },
+  "content": {
+    "invalidOriginalState": "无效的原始状态数据",
+    "restoreFailed": "恢复原始状态失败，请刷新页面",
+    "pageAnalysisFailed": "页面分析失败",
+    "elementNotFound": "未找到匹配的元素: {selector}",
+    "unknownCommandType": "未知的命令类型: {type}",
+    "invalidCssProperties": "无效的CSS属性",
+    "targetElementNotFound": "目标元素未找到: {selector}",
+    "invalidPosition": "无效的位置: {position}",
+    "invalidWrapperHtml": "无效的包装HTML",
+    "invalidWrapperStructure": "无效的包装HTML结构",
+    "invalidReorderParams": "无效的重排参数",
+    "reorderFailed": "重排失败: {error}"
+  },
+  "presetTexts": {
+    "reader": "转为阅读模式：完全移除侧边栏、广告、导航栏和推广内容。仅专注于主要文章内容，优化排版效果。",
+    "minimal": "极简模式：移除所有广告、推广横幅、装饰元素和不必要的界面。仅保留核心内容和基本功能。",
+    "article": "文章专注：移除所有广告、推广内容、相关文章和评论区。突出主要文章标题和正文，提高可读性。",
+    "clean": "清理广告：积极移除所有广告、推广横幅、赞助内容、弹窗和营销材料，同时保持原有内容布局。"
+  },
+  "errors": {
+    "noPrompt": "请先输入重排需求或选择预设模板",
+    "refactorFailed": "重排失败: {error}",
+    "resetFailed": "恢复失败: {error}",
+    "testConnectionFailed": "连接测试失败: {error}"
+  }
+}

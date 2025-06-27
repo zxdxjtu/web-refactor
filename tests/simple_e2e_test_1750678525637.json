@@ -1,0 +1,160 @@
+{
+  "timestamp": "2025-06-23T11:35:25.636Z",
+  "provider": "qwen",
+  "model": "qwen-plus-2025-04-28",
+  "userPrompt": "移除所有广告和推广内容，但保留视频播放、点赞、关注等核心功能",
+  "mockPageContent": {
+    "analysis": {
+      "title": "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+      "url": "https://www.bilibili.com/",
+      "mainContent": {
+        "selector": ".main-content",
+        "text": "推荐视频区域，包含各种优质内容创作者的视频作品，涵盖动画、游戏、音乐、科技等多个分类...",
+        "length": 2500
+      },
+      "advertisements": [
+        {
+          "selector": ".ad-banner-top",
+          "size": "1200x120",
+          "text": "顶部广告横幅 - 游戏推广内容"
+        },
+        {
+          "selector": ".promotion-card",
+          "size": "300x400",
+          "text": "推广卡片 - 商品推荐"
+        },
+        {
+          "selector": ".sidebar-ad",
+          "size": "300x250",
+          "text": "侧边栏广告 - 直播推广"
+        }
+      ],
+      "navigation": [
+        {
+          "selector": ".nav-bar",
+          "text": "首页 动画 番剧 国创 音乐 舞蹈 游戏 知识 数码 生活 美食"
+        }
+      ],
+      "sidebars": [
+        {
+          "selector": ".right-sidebar",
+          "text": "右侧边栏：推荐关注、热门话题、直播推荐"
+        }
+      ],
+      "contentStructure": {
+        "headings": 25,
+        "paragraphs": 0,
+        "lists": 12,
+        "images": 80,
+        "links": 150
+      }
+    },
+    "interactiveElements": [
+      {
+        "selector": ".video-card .play-btn",
+        "type": "button",
+        "text": "播放",
+        "important": true
+      },
+      {
+        "selector": ".video-card .like-btn",
+        "type": "button",
+        "text": "点赞",
+        "important": true
+      },
+      {
+        "selector": ".video-card .coin-btn",
+        "type": "button",
+        "text": "投币",
+        "important": true
+      },
+      {
+        "selector": ".follow-btn",
+        "type": "button",
+        "text": "关注",
+        "important": true
+      },
+      {
+        "selector": ".search-input",
+        "type": "input",
+        "text": "",
+        "important": true
+      },
+      {
+        "selector": ".ad-close-btn",
+        "type": "button",
+        "text": "关闭广告",
+        "important": false
+      },
+      {
+        "selector": ".promotion-link",
+        "type": "link",
+        "text": "查看详情",
+        "important": false
+      }
+    ]
+  },
+  "generatedCommands": {
+    "actions": [
+      {
+        "type": "remove",
+        "selector": ".ad-banner-top",
+        "reason": "Remove top advertisement banner"
+      },
+      {
+        "type": "remove",
+        "selector": ".promotion-card",
+        "reason": "Remove promotional product cards"
+      },
+      {
+        "type": "remove",
+        "selector": ".sidebar-ad",
+        "reason": "Remove sidebar直播 promotion"
+      }
+    ]
+  },
+  "validationResults": {
+    "results": [
+      {
+        "commandIndex": 0,
+        "success": true,
+        "elementsAffected": 2,
+        "type": "remove",
+        "selector": ".ad-banner-top"
+      },
+      {
+        "commandIndex": 1,
+        "success": true,
+        "elementsAffected": 1,
+        "type": "remove",
+        "selector": ".promotion-card"
+      },
+      {
+        "commandIndex": 2,
+        "success": true,
+        "elementsAffected": 3,
+        "type": "remove",
+        "selector": ".sidebar-ad"
+      }
+    ],
+    "stats": {
+      "remove": 3,
+      "hide": 0,
+      "style": 0,
+      "other": 0
+    },
+    "successCount": 3
+  },
+  "statistics": {
+    "commandCount": 3,
+    "validCommandCount": 3,
+    "validationRate": 100,
+    "adTargetingRate": 67,
+    "commandTypes": {
+      "remove": 3,
+      "hide": 0,
+      "style": 0,
+      "other": 0
+    }
+  }
+}

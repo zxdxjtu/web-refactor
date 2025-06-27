@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>完整工作流程测试 - Full Workflow Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        
+        .test-section {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .ad-content {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .sidebar-ad {
+            background: #ffeb3b;
+            color: #333;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            border: 2px solid #ff9800;
+        }
+        
+        .content-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        button:hover {
+            background: #005a87;
+        }
+        
+        .workflow-log {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 完整工作流程测试 Full Workflow Test</h1>
+    
+    <div class="info">
+        <h3>📋 测试说明 Test Instructions:</h3>
+        <ol>
+            <li><strong>重新加载扩展</strong> - Reload extension in chrome://extensions</li>
+            <li><strong>刷新页面</strong> - Refresh this page</li>
+            <li><strong>点击扩展图标</strong> - Click extension icon</li>
+            <li><strong>输入重构指令</strong> - Enter refactor prompt (例如：移除广告 Remove ads)</li>
+            <li><strong>点击重构按钮</strong> - Click refactor button</li>
+            <li><strong>观察结果</strong> - Observe results below</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h3>🔍 扩展状态监控 Extension Status Monitor</h3>
+        <div id="status-monitor">正在检查...</div>
+        <button onclick="forceStatusCheck()">强制检查 Force Check</button>
+        <button onclick="clearLogs()">清除日志 Clear Logs</button>
+    </div>
+
+    <div class="ad-content">
+        🚫 这是一个广告横幅 - This is an AD BANNER that should be REMOVED
+        <br>Class: .ad-content
+    </div>
+
+    <div class="content-card">
+        <h3>📄 主要内容 Main Content</h3>
+        <p>这是页面的主要内容，应该被保留和优化。This is the main content of the page that should be preserved and optimized.</p>
+        <button onclick="alert('主要功能按钮')">主要功能 Main Function</button>
+        <button onclick="alert('次要功能按钮')">次要功能 Secondary Function</button>
+    </div>
+
+    <div class="sidebar-ad">
+        🚫 侧边栏广告 - Sidebar Advertisement
+        <br>Class: .sidebar-ad
+        <br>这个也应该被移除 This should also be removed
+    </div>
+
+    <div class="content-card">
+        <h3>📊 更多内容 More Content</h3>
+        <p>另一个内容区域，包含有用的信息。Another content area with useful information.</p>
+        <ul>
+            <li>列表项目 1 List item 1</li>
+            <li>列表项目 2 List item 2</li>
+            <li>列表项目 3 List item 3</li>
+        </ul>
+        <button onclick="alert('列表功能')">列表功能 List Function</button>
+    </div>
+
+    <div class="ad-content" style="background: linear-gradient(45deg, #e74c3c, #f39c12);">
+        🚫 另一个广告 - Another Advertisement
+        <br>这个广告有不同的样式 This ad has different styling
+    </div>
+
+    <div class="test-section">
+        <h3>📝 工作流程日志 Workflow Logs</h3>
+        <div class="workflow-log" id="workflow-logs">
+等待扩展操作...<br>
+Waiting for extension actions...
+        </div>
+    </div>
+
+    <script>
+        let logCount = 0;
+        
+        function log(message, type = 'info') {
+            const logs = document.getElementById('workflow-logs');
+            const timestamp = new Date().toLocaleTimeString();
+            const icon = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+            
+            logCount++;
+            logs.innerHTML += `<br>[${timestamp}] ${icon} ${message}`;
+            logs.scrollTop = logs.scrollHeight;
+            
+            console.log(`[${timestamp}] ${message}`);
+        }
+        
+        function clearLogs() {
+            document.getElementById('workflow-logs').innerHTML = '日志已清除 Logs cleared';
+            logCount = 0;
+        }
+        
+        function updateStatusMonitor() {
+            const monitor = document.getElementById('status-monitor');
+            
+            let status = '<strong>🔍 扩展状态 Extension Status:</strong><br>';
+            status += `Chrome Runtime: ${!!chrome?.runtime ? '✅' : '❌'}<br>`;
+            status += `Content Loaded: ${window.webRefactorContentLoaded ? '✅' : '❌'}<br>`;
+            status += `Content Instance: ${!!window.webRefactorContent ? '✅' : '❌'}<br>`;
+            status += `Fallback Mode: ${window.webRefactorContentFallback ? '⚠️ Yes' : 'No'}<br>`;
+            status += `Content Error: ${window.webRefactorContentError || 'None'}<br>`;
+            
+            if (chrome?.runtime?.onMessage) {
+                status += `Message Listeners: ${chrome.runtime.onMessage.hasListeners() ? '✅' : '❌'}<br>`;
+            }
+            
+            status += `<small>更新时间: ${new Date().toLocaleTimeString()}</small>`;
+            
+            monitor.innerHTML = status;
+        }
+        
+        function forceStatusCheck() {
+            updateStatusMonitor();
+            log('状态检查完成 Status check completed');
+        }
+        
+        // Monitor for extension loading
+        let extensionCheckInterval = setInterval(() => {
+            const wasLoaded = window.webRefactorContentLoaded;
+            const isLoadedNow = !!window.webRefactorContentLoaded;
+            
+            if (!wasLoaded && isLoadedNow) {
+                if (window.webRefactorContentFallback) {
+                    log('扩展已加载 (Fallback模式) Extension loaded (Fallback mode)', 'warning');
+                } else {
+                    log('扩展已加载 (完整模式) Extension loaded (Full mode)', 'success');
+                }
+            }
+            
+            if (window.webRefactorContentError && !window.lastReportedError) {
+                log('扩展加载错误: ' + window.webRefactorContentError, 'error');
+                window.lastReportedError = window.webRefactorContentError;
+            }
+            
+            updateStatusMonitor();
+        }, 2000);
+        
+        // Watch for DOM changes (indicating refactoring)
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    const element = mutation.target;
+                    if (element.style.display === 'none' && element.getAttribute('data-refactor-hidden')) {
+                        log(`元素已隐藏: ${element.className || element.tagName} Element hidden: ${element.className || element.tagName}`, 'success');
+                    }
+                }
+                
+                if (mutation.type === 'attributes' && mutation.attributeName === 'data-refactor-hidden') {
+                    const element = mutation.target;
+                    log(`重构标记添加到: ${element.className || element.tagName} Refactor marker added to: ${element.className || element.tagName}`, 'success');
+                }
+            });
+        });
+        
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ['style', 'data-refactor-hidden'],
+            subtree: true
+        });
+        
+        // Initial setup
+        document.addEventListener('DOMContentLoaded', () => {
+            log('页面加载完成 Page loaded');
+            updateStatusMonitor();
+            
+            // Log page statistics
+            setTimeout(() => {
+                log(`页面统计 Page stats: ${document.querySelectorAll('.ad-content, .sidebar-ad').length} 个广告元素 ad elements, ${document.querySelectorAll('.content-card').length} 个内容区域 content areas`);
+            }, 1000);
+        });
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (extensionCheckInterval) {
+                clearInterval(extensionCheckInterval);
+            }
+            observer.disconnect();
+        });
+        
+        console.log('🧪 Full workflow test page initialized');
+        console.log('Page elements:', {
+            ads: document.querySelectorAll('.ad-content, .sidebar-ad').length,
+            content: document.querySelectorAll('.content-card').length,
+            buttons: document.querySelectorAll('button').length
+        });
+    </script>
+</body>
+</html>

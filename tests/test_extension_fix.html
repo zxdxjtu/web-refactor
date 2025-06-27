@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extension Fix Test - Load this page after reloading the extension</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        
+        .test-button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        .test-button:hover {
+            background: #005a87;
+        }
+        
+        .debug-section {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Extension Fix Verification</h1>
+    
+    <div class="info">
+        <h3>Test Instructions:</h3>
+        <ol>
+            <li><strong>重新加载扩展</strong> - Go to chrome://extensions and click the reload button for Smart Web Refactor</li>
+            <li><strong>刷新此页面</strong> - Refresh this page after reloading the extension</li>
+            <li><strong>点击扩展图标</strong> - Click the extension icon in your toolbar</li>
+            <li><strong>尝试重构功能</strong> - Try the refactor functionality</li>
+            <li><strong>查看结果</strong> - Check results and console logs</li>
+        </ol>
+    </div>
+
+    <div class="debug-section">
+        <h3>🔍 Extension Status Check</h3>
+        <button class="test-button" onclick="runDiagnostics()">Run Full Diagnostics</button>
+        <button class="test-button" onclick="testContentScriptDirectly()">Test Content Script</button>
+        <button class="test-button" onclick="clearDebugInfo()">Clear Results</button>
+        
+        <div id="diagnostic-results"></div>
+    </div>
+
+    <div class="debug-section">
+        <h3>📝 Test Content for Refactoring</h3>
+        <p>这是一个测试段落，可以被扩展修改。This is a test paragraph that can be modified by the extension.</p>
+        <p>另一个包含<strong>粗体文本</strong>和<em>斜体文本</em>的段落。Another paragraph with <strong>bold text</strong> and <em>italic text</em>.</p>
+        
+        <div class="ad-like-content" style="background: #ffeb3b; padding: 10px; border: 2px solid #ff9800;">
+            🚫 This looks like an advertisement that should be detected and removed.
+        </div>
+        
+        <button class="test-button" onclick="alert('Interactive button clicked!')">Interactive Button</button>
+        <a href="#" onclick="alert('Link clicked!'); return false;">Test Link</a>
+    </div>
+
+    <script>
+        let diagnosticInterval;
+
+        function clearDebugInfo() {
+            document.getElementById('diagnostic-results').innerHTML = '';
+            if (diagnosticInterval) {
+                clearInterval(diagnosticInterval);
+                diagnosticInterval = null;
+            }
+        }
+
+        function runDiagnostics() {
+            clearDebugInfo();
+            
+            console.log('🧪 Starting extension diagnostics...');
+            
+            const results = [];
+            
+            // Check 1: Basic extension environment
+            results.push({
+                test: 'Chrome Runtime Available',
+                result: !!chrome?.runtime,
+                status: !!chrome?.runtime ? 'success' : 'error'
+            });
+            
+            // Check 2: Content script loaded
+            results.push({
+                test: 'WebRefactorContent Class Available',
+                result: typeof WebRefactorContent !== 'undefined',
+                status: typeof WebRefactorContent !== 'undefined' ? 'success' : 'error'
+            });
+            
+            // Check 3: Content script instance
+            results.push({
+                test: 'Content Script Instance Exists',
+                result: !!window.webRefactorContent,
+                status: !!window.webRefactorContent ? 'success' : 'warning'
+            });
+            
+            // Check 4: Content script loaded flag
+            results.push({
+                test: 'Content Script Loaded Flag',
+                result: window.webRefactorContentLoaded,
+                status: window.webRefactorContentLoaded ? 'success' : 'warning'
+            });
+            
+            // Check 5: Content script error
+            results.push({
+                test: 'Content Script Error Status',
+                result: window.webRefactorContentError || 'None',
+                status: window.webRefactorContentError ? 'error' : 'success'
+            });
+            
+            // Check 6: Message listeners
+            if (chrome?.runtime?.onMessage) {
+                results.push({
+                    test: 'Message Listeners Registered',
+                    result: chrome.runtime.onMessage.hasListeners(),
+                    status: chrome.runtime.onMessage.hasListeners() ? 'success' : 'error'
+                });
+            }
+            
+            // Check 7: Required classes
+            const requiredClasses = ['InteractiveElementDetector', 'DOMAnalyzer', 'CommandExecutor', 'VisualEnhancer'];
+            requiredClasses.forEach(className => {
+                const exists = typeof window[className] !== 'undefined';
+                results.push({
+                    test: `${className} Class Available`,
+                    result: exists,
+                    status: exists ? 'success' : 'error'
+                });
+            });
+            
+            displayResults(results);
+            
+            // Auto-refresh every 3 seconds
+            diagnosticInterval = setInterval(() => {
+                console.log('🔄 Auto-refreshing diagnostics...');
+                runDiagnostics();
+            }, 3000);
+        }
+        
+        function testContentScriptDirectly() {
+            console.log('🧪 Testing content script directly...');
+            
+            if (!window.webRefactorContent) {
+                console.log('❌ No content script instance found');
+                alert('❌ Content script not loaded. Please reload the extension and refresh this page.');
+                return;
+            }
+            
+            try {
+                // Test ping functionality
+                console.log('🏓 Testing ping...');
+                window.webRefactorContent.handleMessage(
+                    { action: 'ping' }, 
+                    null, 
+                    (response) => {
+                        console.log('🏓 Ping response:', response);
+                        if (response?.pong) {
+                            alert('✅ Content script is working! Ping test successful.');
+                        } else {
+                            alert('⚠️ Content script responded but with unexpected result: ' + JSON.stringify(response));
+                        }
+                    }
+                );
+            } catch (error) {
+                console.error('❌ Content script test failed:', error);
+                alert('❌ Content script test failed: ' + error.message);
+            }
+        }
+        
+        function displayResults(results) {
+            let html = '<h4>🔍 Diagnostic Results:</h4>';
+            
+            results.forEach(result => {
+                const statusClass = result.status;
+                const icon = statusClass === 'success' ? '✅' : statusClass === 'error' ? '❌' : '⚠️';
+                
+                html += `
+                    <div class="${statusClass}" style="margin: 5px 0; padding: 8px; border-radius: 4px;">
+                        ${icon} <strong>${result.test}:</strong> ${result.result}
+                    </div>
+                `;
+            });
+            
+            html += `
+                <div class="info" style="margin-top: 15px;">
+                    <strong>现在时间:</strong> ${new Date().toLocaleString()}<br>
+                    <strong>页面URL:</strong> ${window.location.href}<br>
+                    <strong>自动刷新:</strong> 每3秒 (点击"Clear Results"停止)
+                </div>
+            `;
+            
+            document.getElementById('diagnostic-results').innerHTML = html;
+        }
+        
+        // Auto-run diagnostics when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 Extension fix test page loaded');
+            setTimeout(() => {
+                runDiagnostics();
+            }, 1000);
+        });
+        
+        // Log useful debugging information
+        console.log('=== Extension Fix Test Page Debug Info ===');
+        console.log('Page loaded at:', new Date().toISOString());
+        console.log('Chrome runtime:', !!chrome?.runtime);
+        console.log('Document ready state:', document.readyState);
+    </script>
+</body>
+</html>

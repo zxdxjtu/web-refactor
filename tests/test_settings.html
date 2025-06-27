@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Settings Persistence</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        button { margin: 5px; padding: 8px 15px; }
+        input, select { margin: 5px; padding: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Extension Settings Persistence Test</h1>
+    
+    <div class="test-section">
+        <h3>Test Settings Save/Load</h3>
+        <p>This page tests if the extension settings are properly saved and loaded.</p>
+        
+        <button onclick="saveTestSettings()">Save Test Settings</button>
+        <button onclick="loadTestSettings()">Load Test Settings</button>
+        <button onclick="clearAllSettings()">Clear All Settings</button>
+        
+        <div id="test-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Current Settings</h3>
+        <div id="current-settings"></div>
+        <button onclick="showCurrentSettings()">Refresh Current Settings</button>
+    </div>
+    
+    <script>
+        async function saveTestSettings() {
+            const testSettings = {
+                llmProvider: 'custom',
+                apiUrl: 'https://test-api.example.com/v1/chat/completions',
+                apiKey: 'test-key-12345',
+                modelName: 'test-model-v1',
+                maxTokens: 1500,
+                language: 'en',
+                enableAutoRefactor: true,
+                proxyUrl: 'http://test-proxy:8080'
+            };
+            
+            try {
+                await chrome.storage.sync.set(testSettings);
+                document.getElementById('test-results').innerHTML = 
+                    '<div class="success">✅ Test settings saved successfully!</div>' +
+                    '<pre>' + JSON.stringify(testSettings, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('test-results').innerHTML = 
+                    '<div class="error">❌ Failed to save: ' + error.message + '</div>';
+            }
+        }
+        
+        async function loadTestSettings() {
+            try {
+                const settings = await chrome.storage.sync.get([
+                    'llmProvider', 'apiUrl', 'apiKey', 'modelName', 'maxTokens',
+                    'language', 'enableAutoRefactor', 'proxyUrl'
+                ]);
+                
+                document.getElementById('test-results').innerHTML = 
+                    '<div class="success">✅ Settings loaded successfully!</div>' +
+                    '<pre>' + JSON.stringify(settings, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('test-results').innerHTML = 
+                    '<div class="error">❌ Failed to load: ' + error.message + '</div>';
+            }
+        }
+        
+        async function clearAllSettings() {
+            try {
+                await chrome.storage.sync.clear();
+                document.getElementById('test-results').innerHTML = 
+                    '<div class="success">✅ All settings cleared!</div>';
+            } catch (error) {
+                document.getElementById('test-results').innerHTML = 
+                    '<div class="error">❌ Failed to clear: ' + error.message + '</div>';
+            }
+        }
+        
+        async function showCurrentSettings() {
+            try {
+                const allSettings = await chrome.storage.sync.get();
+                document.getElementById('current-settings').innerHTML = 
+                    '<pre>' + JSON.stringify(allSettings, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('current-settings').innerHTML = 
+                    '<div class="error">❌ Failed to get settings: ' + error.message + '</div>';
+            }
+        }
+        
+        // Auto-load current settings on page load
+        showCurrentSettings();
+    </script>
+</body>
+</html>

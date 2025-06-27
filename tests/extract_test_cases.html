@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Case Extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .success { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border-color: #bee5eb; }
+        
+        button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #005a87; }
+        button:disabled { background: #6c757d; cursor: not-allowed; }
+        
+        textarea {
+            width: 100%;
+            min-height: 400px;
+            font-family: monospace;
+            font-size: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+        
+        .test-case-item {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        .test-case-item:hover {
+            background: #f0f0f0;
+        }
+        .test-case-item.selected {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .filename {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Case Extractor</h1>
+    
+    <div class="info container">
+        <h3>使用说明 Usage Instructions:</h3>
+        <ol>
+            <li><strong>加载测试用例</strong> - Click "Load Test Cases" to get saved test cases from extension</li>
+            <li><strong>选择测试用例</strong> - Click on a test case to select it</li>
+            <li><strong>导出JSON</strong> - Click "Export Selected" to get the JSON for external testing</li>
+            <li><strong>保存文件</strong> - Copy the JSON and save it as a .json file for your tests</li>
+        </ol>
+    </div>
+
+    <div class="container">
+        <h3>🔍 Available Test Cases</h3>
+        <button onclick="loadTestCases()">Load Test Cases</button>
+        <button onclick="clearOldTestCases()">Clear Old Cases</button>
+        <button onclick="showLatestTestCase()">Show Latest</button>
+        
+        <div id="test-case-list">
+            <p>Click "Load Test Cases" to see available test cases...</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <h3>📋 Selected Test Case</h3>
+        <button onclick="exportSelected()" id="export-btn" disabled>Export Selected</button>
+        <button onclick="downloadAsFile()" id="download-btn" disabled>Download as JSON File</button>
+        <button onclick="copyToClipboard()" id="copy-btn" disabled>Copy to Clipboard</button>
+        
+        <div id="selected-info">
+            <p>Select a test case above to see its details...</p>
+        </div>
+        
+        <textarea id="json-output" placeholder="Selected test case JSON will appear here..."></textarea>
+    </div>
+
+    <div class="container">
+        <h3>🧪 Test Runner</h3>
+        <p>Use this section to test the LLM processing with your selected test case:</p>
+        <button onclick="testLLMProcessing()" id="test-btn" disabled>Test LLM Processing</button>
+        <div id="test-results"></div>
+    </div>
+
+    <script>
+        let selectedTestCase = null;
+        let allTestCases = {};
+
+        async function loadTestCases() {
+            try {
+                console.log('🔍 Loading test cases from chrome storage...');
+                
+                // Get all storage data
+                const allData = await chrome.storage.local.get();
+                console.log('📦 All storage keys:', Object.keys(allData));
+                
+                // Filter test case keys
+                const testCaseKeys = Object.keys(allData).filter(key => 
+                    key.startsWith('test_case_') && key !== 'test_case_latest'
+                );
+                
+                console.log('🧪 Found test case keys:', testCaseKeys);
+                
+                allTestCases = {};
+                testCaseKeys.forEach(key => {
+                    allTestCases[key] = allData[key];
+                });
+                
+                // Also add latest test case if available
+                if (allData.latest_test_case) {
+                    allTestCases['latest_test_case'] = allData.latest_test_case;
+                }
+                
+                displayTestCases();
+                
+            } catch (error) {
+                console.error('❌ Error loading test cases:', error);
+                document.getElementById('test-case-list').innerHTML = 
+                    '<div class="error container">Error loading test cases: ' + error.message + '</div>';
+            }
+        }
+
+        function displayTestCases() {
+            const container = document.getElementById('test-case-list');
+            
+            if (Object.keys(allTestCases).length === 0) {
+                container.innerHTML = '<p>No test cases found. Try using the extension to create some test cases first.</p>';
+                return;
+            }
+            
+            let html = `<p>Found ${Object.keys(allTestCases).length} test cases:</p>`;
+            
+            Object.entries(allTestCases).forEach(([key, testCase]) => {
+                const metadata = testCase.metadata || {};
+                const stats = testCase.statistics || {};
+                
+                html += `
+                    <div class="test-case-item" onclick="selectTestCase('${key}')">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong>${metadata.title || 'Unknown Title'}</strong>
+                                <span class="filename">${key}</span>
+                            </div>
+                            <div style="text-align: right; font-size: 12px; color: #666;">
+                                ${metadata.extractedAt || 'Unknown time'}
+                            </div>
+                        </div>
+                        <div style="margin: 8px 0; color: #666; font-size: 14px;">
+                            <strong>URL:</strong> ${metadata.url || 'Unknown URL'}<br>
+                            <strong>Prompt:</strong> "${metadata.userPrompt || 'No prompt'}"
+                        </div>
+                        <div class="stats">
+                            <span>📄 ${stats.paragraphs || 0} paragraphs</span>
+                            <span>🔗 ${stats.links || 0} links</span>
+                            <span>🖼️ ${stats.images || 0} images</span>
+                            <span>🎯 ${stats.totalInteractiveElements || 0} interactive</span>
+                            <span>🚫 ${stats.advertisements || 0} ads</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function selectTestCase(key) {
+            selectedTestCase = allTestCases[key];
+            
+            // Update visual selection
+            document.querySelectorAll('.test-case-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            event.target.closest('.test-case-item').classList.add('selected');
+            
+            // Update info display
+            const metadata = selectedTestCase.metadata || {};
+            const stats = selectedTestCase.statistics || {};
+            
+            document.getElementById('selected-info').innerHTML = `
+                <div class="info container">
+                    <h4>📊 Test Case Details</h4>
+                    <p><strong>Title:</strong> ${metadata.title}</p>
+                    <p><strong>URL:</strong> ${metadata.url}</p>
+                    <p><strong>Domain:</strong> ${metadata.domain}</p>
+                    <p><strong>User Prompt:</strong> "${metadata.userPrompt}"</p>
+                    <p><strong>Extracted:</strong> ${metadata.extractedAt}</p>
+                    <p><strong>Stats:</strong> ${stats.totalInteractiveElements} interactive elements, ${stats.advertisements} ads detected</p>
+                </div>
+            `;
+            
+            // Enable buttons
+            document.getElementById('export-btn').disabled = false;
+            document.getElementById('download-btn').disabled = false;
+            document.getElementById('copy-btn').disabled = false;
+            document.getElementById('test-btn').disabled = false;
+            
+            console.log('✅ Selected test case:', key, selectedTestCase);
+        }
+
+        function exportSelected() {
+            if (!selectedTestCase) {
+                alert('Please select a test case first');
+                return;
+            }
+            
+            const exportData = {
+                ...selectedTestCase,
+                export_info: {
+                    exported_at: new Date().toISOString(),
+                    exported_from: 'Test Case Extractor',
+                    usage: "Use pageContent and metadata.userPrompt to test LLM processing"
+                }
+            };
+            
+            const json = JSON.stringify(exportData, null, 2);
+            document.getElementById('json-output').value = json;
+            
+            console.log('📋 Test case exported to textarea');
+        }
+
+        function downloadAsFile() {
+            if (!selectedTestCase) {
+                alert('Please select a test case first');
+                return;
+            }
+            
+            const exportData = {
+                ...selectedTestCase,
+                export_info: {
+                    exported_at: new Date().toISOString(),
+                    exported_from: 'Test Case Extractor'
+                }
+            };
+            
+            const json = JSON.stringify(exportData, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `test_case_${selectedTestCase.metadata?.domain || 'unknown'}_${Date.now()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            console.log('📁 Test case downloaded as file');
+        }
+
+        async function copyToClipboard() {
+            const textarea = document.getElementById('json-output');
+            if (!textarea.value) {
+                exportSelected();
+            }
+            
+            try {
+                await navigator.clipboard.writeText(textarea.value);
+                alert('✅ Test case JSON copied to clipboard!');
+            } catch (error) {
+                console.error('Failed to copy:', error);
+                // Fallback
+                textarea.select();
+                document.execCommand('copy');
+                alert('✅ Test case JSON copied to clipboard (fallback method)!');
+            }
+        }
+
+        async function clearOldTestCases() {
+            if (!confirm('Are you sure you want to clear old test cases? This cannot be undone.')) {
+                return;
+            }
+            
+            try {
+                const allData = await chrome.storage.local.get();
+                const testCaseKeys = Object.keys(allData).filter(key => 
+                    key.startsWith('test_case_') && key !== 'latest_test_case'
+                );
+                
+                if (testCaseKeys.length === 0) {
+                    alert('No old test cases to clear.');
+                    return;
+                }
+                
+                // Remove old test cases
+                for (const key of testCaseKeys) {
+                    await chrome.storage.local.remove(key);
+                }
+                
+                alert(`✅ Cleared ${testCaseKeys.length} old test cases.`);
+                loadTestCases(); // Refresh the list
+                
+            } catch (error) {
+                console.error('❌ Error clearing test cases:', error);
+                alert('❌ Error clearing test cases: ' + error.message);
+            }
+        }
+
+        async function showLatestTestCase() {
+            try {
+                const data = await chrome.storage.local.get('latest_test_case');
+                if (data.latest_test_case) {
+                    allTestCases['latest_test_case'] = data.latest_test_case;
+                    displayTestCases();
+                    
+                    // Auto-select the latest test case
+                    selectTestCase('latest_test_case');
+                    
+                } else {
+                    alert('No latest test case found. Try using the extension first.');
+                }
+            } catch (error) {
+                console.error('❌ Error loading latest test case:', error);
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        function testLLMProcessing() {
+            if (!selectedTestCase) {
+                alert('Please select a test case first');
+                return;
+            }
+            
+            const testResults = document.getElementById('test-results');
+            testResults.innerHTML = `
+                <div class="info container">
+                    <h4>🧪 LLM Processing Test</h4>
+                    <p><strong>Note:</strong> This is a mock test. To actually test LLM processing:</p>
+                    <ol>
+                        <li>Copy the test case JSON</li>
+                        <li>Use it in your LLM testing environment</li>
+                        <li>Call: <code>generateRefactorCommands(testCase.pageContent, testCase.metadata.userPrompt)</code></li>
+                    </ol>
+                    
+                    <h4>📊 Test Case Summary:</h4>
+                    <pre style="background: #f8f9fa; padding: 10px; border-radius: 4px; font-size: 12px;">
+URL: ${selectedTestCase.metadata?.url}
+Prompt: "${selectedTestCase.metadata?.userPrompt}"
+Elements: ${selectedTestCase.statistics?.totalInteractiveElements} interactive, ${selectedTestCase.statistics?.advertisements} ads
+Content: ${selectedTestCase.statistics?.paragraphs} paragraphs, ${selectedTestCase.statistics?.links} links
+                    </pre>
+                </div>
+            `;
+        }
+
+        // Auto-load test cases when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🧪 Test Case Extractor loaded');
+            
+            // Check if we have chrome.storage available
+            if (!chrome?.storage) {
+                document.getElementById('test-case-list').innerHTML = 
+                    '<div class="error container">❌ Chrome storage not available. Make sure this page is loaded as part of the extension.</div>';
+                return;
+            }
+            
+            // Auto-load test cases
+            setTimeout(loadTestCases, 500);
+        });
+    </script>
+</body>
+</html>

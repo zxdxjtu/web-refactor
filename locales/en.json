@@ -1,0 +1,166 @@
+{
+  "common": {
+    "appName": "Smart Web Refactor",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "test": "Test",
+    "reset": "Reset",
+    "close": "Close",
+    "settings": "Settings"
+  },
+  "popup": {
+    "title": "Smart Web Refactor",
+    "tabs": {
+      "main": "Refactor",
+      "settings": "Settings"
+    },
+    "main": {
+      "userPromptLabel": "Describe your refactor needs:",
+      "userPromptPlaceholder": "e.g., Remove ads, organize article content, simplify layout, highlight main content...",
+      "presetsLabel": "Quick Templates:",
+      "presets": {
+        "reader": "Reader Mode",
+        "minimal": "Minimal Mode", 
+        "article": "Article Focus",
+        "clean": "Clean Ads"
+      },
+      "startRefactor": "Start Refactor",
+      "resetPage": "Restore Original",
+      "saveDomainConfig": "💾 Save Memory",
+      "configSaved": "✅ Config Saved",
+      "saveMemory": "💾 Save Memory",
+      "applyMemory": "🚀 Apply Memory",
+      "viewMemories": "📋 View Memories",
+      "memoryHint": "Save current modifications as domain memory for future use",
+      "memoryStatus": "Memory Status",
+      "memoryAvailable": "✅ Memory Available",
+      "memoryNotFound": "❌ Memory Not Found",
+      "historyTitle": "View history requirements",
+      "history": {
+        "title": "History Requirements",
+        "clearAll": "Clear All",
+        "empty": "No history records"
+      },
+      "status": {
+        "ready": "Ready",
+        "analyzing": "Analyzing page...",
+        "processing": "Processing with LLM...",
+        "executing": "Executing commands...",
+        "completed": "Refactor completed!",
+        "restored": "Page restored",
+        "restoring": "Restoring page..."
+      }
+    },
+    "settings": {
+      "llmConfig": "LLM Configuration",
+      "provider": "Model Provider:",
+      "providers": {
+        "openai": "OpenAI",
+        "anthropic": "Anthropic", 
+        "custom": "Custom"
+      },
+      "apiUrl": "API URL:",
+      "apiKey": "API Key:",
+      "apiKeyHint": "Your API key will be stored securely locally",
+      "modelName": "Model Name:",
+      "maxTokens": "Max Tokens:",
+      "screenshotQuality": "Screenshot Quality:",
+      "qualityOptions": {
+        "low": "Low (Faster)",
+        "medium": "Medium",
+        "high": "High (Slower)"
+      },
+      "otherSettings": "Other Settings",
+      "preserveImages": "Preserve Images",
+      "preserveLinks": "Preserve Links",
+      "autoDetectContent": "Auto Detect Main Content",
+      "language": "Language:",
+      "languages": {
+        "en": "English",
+        "zh": "中文"
+      },
+      "enableAutoRefactor": "Enable Auto Refactor",
+      "autoRefactorHint": "Automatically apply refactor when visiting saved domains",
+      "enableDomainMemory": "Enable Domain Memory",
+      "domainMemoryHint": "Automatically refactor when revisiting the same domain",
+      "autoRefactor": "Auto refactor on page load",
+      "autoRefactorHint": "Automatically apply last settings when page loads",
+      "memorySettings": "Memory Settings",
+      "enableSmartMemory": "Enable Smart Memory",
+      "smartMemoryHint": "Automatically save and apply modification schemes for specific domains",
+      "memoryRetentionDays": "Memory Retention Days:",
+      "maxMemoryEntries": "Max Memory Entries per Domain:",
+      "clearAllMemory": "Clear All Memory",
+      "saveSettings": "Save Settings",
+      "testConnection": "Test Connection",
+      "testing": "Testing connection...",
+      "settingsSaved": "Settings saved",
+      "saveFailed": "Save failed",
+      "connectionSuccess": "Connection successful!",
+      "connectionFailed": "Connection failed"
+    }
+  },
+  "memories": {
+    "title": "Domain Memory Management",
+    "backToMain": "← Back",
+    "clearAll": "Clear All Memories",
+    "emptyMessage": "No saved memories",
+    "emptyHint": "Use the refactor feature first, then save domain memories",
+    "applyMemory": "Apply",
+    "deleteMemory": "Delete",
+    "confirmClearAll": "Are you sure you want to clear all domain memories?",
+    "confirmDelete": "Are you sure you want to delete this memory?",
+    "memoryCleared": "Memory cleared",
+    "memoryDeleted": "Memory deleted",
+    "memoryApplied": "Memory applied"
+  },
+  "background": {
+    "unsupportedPage": "Unsupported page type: {url}\n\nSupported page types:\n• http:// and https:// web pages\n• file:// local files\n\nNot supported:\n• chrome:// browser internal pages\n• chrome-extension:// extension pages\n• edge:// or other browser internal pages",
+    "configurationMissing": "Please configure LLM API information in settings first",
+    "extractionFailed": "Failed to extract page content",
+    "executionFailed": "Failed to execute refactor commands",
+    "llmProcessingFailed": "LLM processing failed",
+    "cannotRunOnPage": "Cannot run extension on this page",
+    "noOriginalState": "No original page state found, please refresh the page and try again",
+    "restoreSuccess": "Page restored to original state",
+    "restoreFailed": "Failed to restore original state, please refresh the page",
+    "apiConnectionFailed": "API connection failed",
+    "commandParsingFailed": "Command parsing failed",
+    "invalidJsonResponse": "No valid JSON found in response",
+    "invalidCommandFormat": "Invalid command format: missing type or selector",
+    "apiRequestFailed": "API request failed ({status}): {error}",
+    "abnormalResponseFormat": "Abnormal LLM response format"
+  },
+  "content": {
+    "invalidOriginalState": "Invalid original state data",
+    "restoreFailed": "Failed to restore original state, please refresh the page",
+    "pageAnalysisFailed": "Page analysis failed",
+    "elementNotFound": "No matching element found: {selector}",
+    "unknownCommandType": "Unknown command type: {type}",
+    "invalidCssProperties": "Invalid CSS properties",
+    "targetElementNotFound": "Target element not found: {selector}",
+    "invalidPosition": "Invalid position: {position}",
+    "invalidWrapperHtml": "Invalid wrapper HTML",
+    "invalidWrapperStructure": "Invalid wrapper HTML structure",
+    "invalidReorderParams": "Invalid reorder parameters",
+    "reorderFailed": "Reorder failed: {error}"
+  },
+  "presetTexts": {
+    "reader": "Convert to reader mode: completely remove sidebars, ads, navigation bars, and promotional content. Focus only on the main article content with clean typography.",
+    "minimal": "Minimal mode: remove all ads, promotional banners, decorative elements, and unnecessary UI. Keep only essential content and core functionality.",
+    "article": "Article focus: remove all ads, promotional content, related articles, and comments. Highlight the main article title and body text with improved readability.",
+    "clean": "Clean ads: aggressively remove all advertisements, promotional banners, sponsored content, pop-ups, and marketing materials while preserving the original content layout."
+  },
+  "errors": {
+    "noPrompt": "Please enter refactor requirements or select a preset template first",
+    "refactorFailed": "Refactor failed: {error}",
+    "resetFailed": "Reset failed: {error}",
+    "testConnectionFailed": "Connection test failed: {error}"
+  }
+}

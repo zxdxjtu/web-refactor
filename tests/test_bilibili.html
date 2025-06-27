@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilibili-like Test Page</title>
+    <!-- Simulate stricter CSP like Bilibili might have -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'none';">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f4f5f7;
+        }
+        .video-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .ad-banner {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .sidebar {
+            position: fixed;
+            right: 20px;
+            top: 100px;
+            width: 200px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav-bar {
+            background: #00a1d6;
+            color: white;
+            padding: 15px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 8px 8px 0 0;
+        }
+        .test-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-status" id="test-status">
+        🔄 Testing extension...
+    </div>
+
+    <div class="nav-bar">
+        <h1>哔哩哔哩 (゜-゜)つロ 干杯~-bilibili (Test Page)</h1>
+        <nav>
+            <a href="#" style="color: white; margin: 0 10px;">首页</a>
+            <a href="#" style="color: white; margin: 0 10px;">动画</a>
+            <a href="#" style="color: white; margin: 0 10px;">番剧</a>
+            <a href="#" style="color: white; margin: 0 10px;">直播</a>
+        </nav>
+    </div>
+
+    <div class="ad-banner">
+        🚫 这是一个广告横幅 - This is an advertisement banner that should be detected and removed
+    </div>
+
+    <div class="video-card">
+        <h3>📺 推荐视频 1</h3>
+        <p>这是一个视频卡片，包含标题和描述。This is a video card with title and description.</p>
+        <button onclick="alert('播放视频!')">播放</button>
+        <button onclick="alert('收藏')">收藏</button>
+    </div>
+
+    <div class="video-card">
+        <h3>📺 推荐视频 2</h3>
+        <p>另一个视频卡片，具有交互功能。Another video card with interactive features.</p>
+        <button onclick="alert('播放视频!')">播放</button>
+        <button onclick="alert('分享')">分享</button>
+    </div>
+
+    <div class="ad-banner" style="background: #ffeb3b; color: #333;">
+        🚫 侧边栏广告 - Sidebar advertisement content
+    </div>
+
+    <div class="video-card">
+        <h3>📺 推荐视频 3</h3>
+        <p>第三个视频卡片，包含更多内容。Third video card with more content.</p>
+        <button onclick="alert('播放视频!')">播放</button>
+        <button onclick="alert('关注UP主')">关注UP主</button>
+    </div>
+
+    <div class="sidebar">
+        <h4>🔧 扩展测试</h4>
+        <p>这个侧边栏用于测试扩展功能。</p>
+        <button onclick="checkExtensionStatus()" style="width: 100%; padding: 8px; margin: 5px 0;">检查扩展状态</button>
+        <button onclick="testPing()" style="width: 100%; padding: 8px; margin: 5px 0;">测试Ping</button>
+        <div id="extension-info" style="font-size: 12px; margin-top: 10px;"></div>
+    </div>
+
+    <script>
+        console.log('🧪 Bilibili-like test page loaded');
+        console.log('Page URL:', window.location.href);
+        console.log('Chrome runtime available:', !!chrome?.runtime);
+
+        function updateStatus(message, isError = false) {
+            const status = document.getElementById('test-status');
+            status.textContent = message;
+            status.style.background = isError ? '#e74c3c' : '#27ae60';
+        }
+
+        function checkExtensionStatus() {
+            const info = document.getElementById('extension-info');
+            let html = '<strong>Extension Status:</strong><br>';
+            
+            html += `Chrome Runtime: ${!!chrome?.runtime}<br>`;
+            html += `Content Loaded: ${!!window.webRefactorContentLoaded}<br>`;
+            html += `Content Instance: ${!!window.webRefactorContent}<br>`;
+            html += `Content Error: ${window.webRefactorContentError || 'None'}<br>`;
+            
+            if (chrome?.runtime?.onMessage) {
+                html += `Message Listeners: ${chrome.runtime.onMessage.hasListeners()}<br>`;
+            }
+            
+            html += `Time: ${new Date().toLocaleTimeString()}`;
+            
+            info.innerHTML = html;
+            
+            console.log('=== Extension Status Check ===');
+            console.log('webRefactorContentLoaded:', window.webRefactorContentLoaded);
+            console.log('webRefactorContent:', window.webRefactorContent);
+            console.log('webRefactorContentError:', window.webRefactorContentError);
+        }
+
+        function testPing() {
+            if (!window.webRefactorContent && !window.webRefactorContentLoaded) {
+                alert('❌ 扩展未加载 - Extension not loaded');
+                return;
+            }
+
+            // Try to ping the extension
+            try {
+                if (window.webRefactorContent) {
+                    window.webRefactorContent.handleMessage(
+                        { action: 'ping' },
+                        null,
+                        (response) => {
+                            console.log('Direct ping response:', response);
+                            if (response?.pong) {
+                                alert('✅ 直接Ping成功! Direct ping successful!');
+                            } else {
+                                alert('⚠️ 直接Ping异常响应 Unexpected ping response: ' + JSON.stringify(response));
+                            }
+                        }
+                    );
+                } else {
+                    alert('⚠️ 扩展已加载但实例不可用 Extension loaded but instance not available');
+                }
+            } catch (error) {
+                console.error('Ping test failed:', error);
+                alert('❌ Ping测试失败: ' + error.message);
+            }
+        }
+
+        // Auto-check extension status periodically
+        setInterval(() => {
+            if (window.webRefactorContentLoaded) {
+                updateStatus('✅ 扩展已加载 Extension Loaded');
+            } else if (window.webRefactorContentError) {
+                updateStatus('❌ 扩展错误: ' + window.webRefactorContentError, true);
+            } else {
+                updateStatus('🔄 等待扩展加载 Waiting for Extension...');
+            }
+        }, 2000);
+
+        // Initial status check
+        setTimeout(checkExtensionStatus, 1000);
+    </script>
+</body>
+</html>
