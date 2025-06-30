@@ -15,8 +15,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 PROJECT_DIR="/home/ec2-user/web-refactor/webpage"
-NGINX_CONF_DIR="/etc/nginx/sites-available"
-NGINX_ENABLED_DIR="/etc/nginx/sites-enabled"
+NGINX_CONF_DIR="/etc/nginx/conf.d"
 DOMAIN="webrefactor.vibesite.fun"
 
 # Function to check if command exists
@@ -59,13 +58,8 @@ echo -e "${GREEN}✓ Website built successfully${NC}"
 # Step 3: Deploy nginx configuration (requires sudo)
 echo -e "${YELLOW}Deploying nginx configuration...${NC}"
 
-# Copy nginx config to sites-available
+# Copy nginx config to conf.d
 sudo cp "$PROJECT_DIR/nginx-webrefactor.conf" "$NGINX_CONF_DIR/webrefactor.conf"
-
-# Create symlink to sites-enabled if it doesn't exist
-if [ ! -L "$NGINX_ENABLED_DIR/webrefactor.conf" ]; then
-    sudo ln -s "$NGINX_CONF_DIR/webrefactor.conf" "$NGINX_ENABLED_DIR/webrefactor.conf"
-fi
 
 # Test nginx configuration
 echo "Testing nginx configuration..."

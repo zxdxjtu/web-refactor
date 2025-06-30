@@ -1,0 +1,92 @@
+{
+  "hero": {
+    "badge": "AI-Powered Web Refactor",
+    "title": "Smart Web Refactor",
+    "description": "Use large language models to intelligently refactor web content, remove ads and clean up clutter while maintaining interactive features",
+    "githubButton": "View Source Code",
+    "chromeButton": "Chrome Store (Under Review)",
+    "features": "100% Local • Privacy Protected • Open Source"
+  },
+  "features": {
+    "title": "Core Features",
+    "subtitle": "Powerful AI-driven features for a more focused browsing experience",
+    "items": {
+      "aiPowered": {
+        "title": "AI-Powered Content Modification",
+        "description": "Intelligently reorganize web layouts using OpenAI, Anthropic, or custom LLM APIs"
+      },
+      "adRemoval": {
+        "title": "Smart Ad & Clutter Removal",
+        "description": "Automatically remove ads and useless content while keeping interactive elements intact"
+      },
+      "focusModes": {
+        "title": "Focus Modes",
+        "description": "Built-in reading mode, minimal layout, and ad-free browsing presets"
+      },
+      "domainMemory": {
+        "title": "Domain Memory",
+        "description": "Save and automatically apply refactoring preferences for specific websites"
+      }
+    }
+  },
+  "useCases": {
+    "title": "Use Cases",
+    "subtitle": "Works with various websites and browsing needs",
+    "items": {
+      "youtube": {
+        "title": "YouTube Focus Mode",
+        "description": "Remove recommended videos, comments, and sidebars to focus on video content",
+        "tag": "Video"
+      },
+      "articles": {
+        "title": "Article Reading Optimization",
+        "description": "Clean up news websites for a distraction-free reading experience",
+        "tag": "Reading"
+      },
+      "adFree": {
+        "title": "Ad-Free Browsing",
+        "description": "Eliminate ads and promotional content for pure browsing",
+        "tag": "Clean"
+      },
+      "social": {
+        "title": "Social Media Cleanup",
+        "description": "Hide sponsored posts, friend suggestions, and other distractions",
+        "tag": "Social"
+      }
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Get started in three easy steps",
+    "steps": {
+      "install": {
+        "title": "Install Extension",
+        "description": "Download from GitHub or wait for Chrome Store listing"
+      },
+      "configure": {
+        "title": "Configure API",
+        "description": "Set up your LLM API key (OpenAI/Anthropic)"
+      },
+      "refactor": {
+        "title": "Start Refactoring",
+        "description": "Enter natural language commands, AI optimizes the page automatically"
+      }
+    }
+  },
+  "stats": {
+    "local": "Local",
+    "dataCollection": "Data Collection",
+    "aiDevelopment": "AI Developed",
+    "license": "Open Source License"
+  },
+  "cta": {
+    "title": "Ready to Get Started?",
+    "subtitle": "Experience AI-powered web refactoring for more focused and efficient browsing",
+    "githubButton": "Visit GitHub Repository",
+    "docsButton": "View Documentation"
+  },
+  "footer": {
+    "madeWith": "Made with ❤️ using Claude Code & Anthropic • MIT License",
+    "tagline": "Smart Web Refactor - Making web browsing more focused and efficient"
+  }
+}
