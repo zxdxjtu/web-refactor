@@ -1,0 +1,92 @@
+{
+  "hero": {
+    "badge": "AI-Powered Web Refactor",
+    "title": "Smart Web Refactor",
+    "description": "使用大语言模型智能重构网页内容，保持交互功能的同时移除广告、清理杂乱内容，专注于真正重要的信息",
+    "githubButton": "查看开源代码",
+    "chromeButton": "Chrome 商店 (审核中)",
+    "features": "⭐ 100% 本地运行 • 🔒 保护隐私 • 🚀 开源免费"
+  },
+  "features": {
+    "title": "核心功能",
+    "subtitle": "强大的 AI 驱动功能，让您的浏览体验更加专注",
+    "items": {
+      "aiPowered": {
+        "title": "AI-Powered Content Modification",
+        "description": "使用 OpenAI、Anthropic 或自定义 LLM API 智能重组网页布局"
+      },
+      "adRemoval": {
+        "title": "Smart Ad & Clutter Removal",
+        "description": "自动移除广告和无用内容，同时保持交互元素完整"
+      },
+      "focusModes": {
+        "title": "Focus Modes",
+        "description": "内置阅读模式、极简布局和无广告浏览预设"
+      },
+      "domainMemory": {
+        "title": "Domain Memory",
+        "description": "保存并自动应用特定网站的重构偏好设置"
+      }
+    }
+  },
+  "useCases": {
+    "title": "使用场景",
+    "subtitle": "适用于各种网站和浏览需求",
+    "items": {
+      "youtube": {
+        "title": "YouTube 专注模式",
+        "description": "移除推荐视频、评论和侧边栏，专注观看视频内容",
+        "tag": "视频"
+      },
+      "articles": {
+        "title": "文章阅读优化",
+        "description": "清理新闻网站，提供无干扰的阅读体验",
+        "tag": "阅读"
+      },
+      "adFree": {
+        "title": "无广告浏览",
+        "description": "消除广告和推广内容，享受纯净浏览",
+        "tag": "清洁"
+      },
+      "social": {
+        "title": "社交媒体净化",
+        "description": "隐藏赞助帖子、好友推荐等干扰元素",
+        "tag": "社交"
+      }
+    }
+  },
+  "howItWorks": {
+    "title": "工作原理",
+    "subtitle": "三步即可开始使用",
+    "steps": {
+      "install": {
+        "title": "安装扩展",
+        "description": "从 GitHub 下载或等待 Chrome 商店上架"
+      },
+      "configure": {
+        "title": "配置 API",
+        "description": "设置您的 LLM API 密钥（OpenAI/Anthropic）"
+      },
+      "refactor": {
+        "title": "开始重构",
+        "description": "输入自然语言指令，AI 自动优化页面"
+      }
+    }
+  },
+  "stats": {
+    "local": "本地运行",
+    "dataCollection": "数据收集",
+    "aiDevelopment": "AI 开发",
+    "license": "开源许可"
+  },
+  "cta": {
+    "title": "准备开始了吗？",
+    "subtitle": "立即体验 AI 驱动的网页重构，让您的浏览更加专注高效",
+    "githubButton": "访问 GitHub 仓库",
+    "docsButton": "查看文档"
+  },
+  "footer": {
+    "madeWith": "Made with ❤️ using Claude Code & Anthropic • MIT License",
+    "tagline": "Smart Web Refactor - 让网页浏览更加专注和高效"
+  }
+}
