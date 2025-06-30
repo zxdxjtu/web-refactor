@@ -90,10 +90,10 @@ const Index = () => {
               size="lg" 
               variant="outline" 
               className="border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 px-8 py-3"
-              disabled
+              onClick={() => window.open("https://chrome.google.com/webstore/detail/onkhfhnipffijfmppkbhjkjaakflopbk", "_blank")}
             >
               <Chrome className="mr-2 h-5 w-5" />
-              Chrome 商店 (审核中)
+              Chrome 商店安装
             </Button>
           </div>
           
