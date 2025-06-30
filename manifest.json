@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Smart Web Refactor",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Intelligently refactor web content using LLM based on user needs, remove ads and clutter",
   "permissions": [
     "activeTab",

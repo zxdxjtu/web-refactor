@@ -17,7 +17,8 @@ class I18n {
             // Get user configured language
             if (!language) {
                 const settings = await chrome.storage.sync.get(['language']);
-                language = settings.language || this.detectBrowserLanguage();
+                // Always default to English if no saved language preference
+                language = settings.language || 'en';
             }
 
             this.currentLanguage = language;
@@ -36,19 +37,6 @@ class I18n {
         }
     }
 
-    /**
-     * Detect browser language
-     */
-    detectBrowserLanguage() {
-        const browserLang = navigator.language || navigator.userLanguage;
-        
-        // Simple language mapping
-        if (browserLang.startsWith('zh')) {
-            return 'zh';
-        }
-        
-        return 'en'; // Default English
-    }
 
     /**
      * Load language pack

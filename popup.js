@@ -86,7 +86,6 @@ class WebRefactorPopup {
         this.userPrompt = document.getElementById('user-prompt');
         this.presetBtns = document.querySelectorAll('.preset-btn');
         this.refactorBtn = document.getElementById('refactor-btn');
-        this.resetBtn = document.getElementById('reset-btn');
         this.status = document.getElementById('status');
         this.statusText = this.status.querySelector('.status-text');
         
@@ -135,7 +134,6 @@ class WebRefactorPopup {
 
         // Main actions
         this.refactorBtn.addEventListener('click', () => this.startRefactor());
-        this.resetBtn.addEventListener('click', () => this.resetPage());
 
         // Settings
         this.llmProvider.addEventListener('change', () => {
@@ -303,36 +301,18 @@ class WebRefactorPopup {
             await chrome.storage.sync.set({ language: newLanguage });
             // Language setting saved
             
+            // Refresh the current tab to apply language changes to content script
+            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (tab && tab.id) {
+                chrome.tabs.reload(tab.id);
+            }
+            
         } catch (error) {
             console.error('❌ Failed to change language:', error);
         }
     }
 
 
-    async resetPage() {
-        try {
-            this.showStatus(i18n.t('popup.main.status.restoring'), 'loading');
-            this.resetBtn.disabled = true;
-
-            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-            
-            const response = await chrome.runtime.sendMessage({
-                action: 'reset',
-                tabId: tab.id
-            });
-
-            if (response.success) {
-                this.showStatus(i18n.t('popup.main.status.restored'), 'success');
-            } else {
-                this.showStatus(i18n.t('errors.resetFailed', { error: response.error }), 'error');
-            }
-        } catch (error) {
-            console.error('Reset error:', error);
-            this.showStatus(i18n.t('errors.resetFailed', { error: error.message }), 'error');
-        } finally {
-            this.resetBtn.disabled = false;
-        }
-    }
 
     showStatus(message, type = 'normal') {
         this.statusText.textContent = message;

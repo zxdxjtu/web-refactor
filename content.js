@@ -84,6 +84,13 @@ class WebRefactorContent {
 
     async handleExecuteCommands(commands, sendResponse) {
         try {
+            // ALWAYS capture original state before ANY modifications
+            // This ensures restore functionality works for both direct refactor and auto-apply
+            if (!this.originalState) {
+                this.originalState = this.domAnalyzer.captureOriginalState();
+                console.log('📸 Captured original state before command execution');
+            }
+            
             // Record HTML before modification
             const beforeHTML = document.documentElement.outerHTML;
             console.log('=== HTML Before Page Modification ===');
@@ -98,12 +105,6 @@ class WebRefactorContent {
                 localStorage.setItem('webrefactor_before_time', new Date().toISOString());
             } catch (e) {
                 console.warn('Unable to save to localStorage:', e);
-            }
-            
-            // Ensure we have original state for potential rollback
-            if (!this.originalState) {
-                this.originalState = this.domAnalyzer.captureOriginalState();
-                console.log('📸 Captured original state for safety rollback');
             }
             
             let results;
@@ -189,11 +190,26 @@ class WebRefactorContent {
             }
             
             if (!this.originalState) {
-                throw new Error('No original state available to restore');
+                // Try to get from localStorage as fallback
+                const beforeHtml = localStorage.getItem('webrefactor_before_html');
+                if (beforeHtml) {
+                    this.originalState = {
+                        html: beforeHtml,
+                        timestamp: Date.now(),
+                        url: window.location.href
+                    };
+                    console.log('📸 Recovered original state from localStorage');
+                } else {
+                    throw new Error('No original state available to restore. Please refresh the page.');
+                }
             }
 
             this.visualEnhancer.destroy();
             this.domAnalyzer.restoreOriginalState(this.originalState);
+            
+            // Clear the stored state after successful restore
+            this.originalState = null;
+            
             sendResponse({ success: true, data: { message: 'Page has been restored to original state' } });
         } catch (error) {
             sendResponse({ success: false, error: error.message });

@@ -57,6 +57,11 @@
         "restoring": "正在恢复页面..."
       }
     },
+    "memories": {
+      "title": "域名记忆",
+      "backToMain": "← 返回",
+      "clearAll": "清除所有记忆"
+    },
     "settings": {
       "llmConfig": "LLM配置",
       "provider": "模型提供商：",

@@ -1647,6 +1647,7 @@ Please generate DOM manipulation commands to implement the user's requirements. 
         // Generate curl command for debugging
         
         const curlCommand = this.generateCurlCommand(apiUrl, headers, requestBody, proxyUrl);
+        const hasProxyInCurl = !!proxyUrl && proxyUrl.trim() !== '';
         
         await this.logToFile('curl_command', { 
             curlCommand, 

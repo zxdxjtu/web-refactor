@@ -57,6 +57,11 @@
         "restoring": "Restoring page..."
       }
     },
+    "memories": {
+      "title": "Domain Memories",
+      "backToMain": "← Back",
+      "clearAll": "Clear All Memories"
+    },
     "settings": {
       "llmConfig": "LLM Configuration",
       "provider": "Model Provider:",
