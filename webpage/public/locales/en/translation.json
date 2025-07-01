@@ -4,7 +4,7 @@
     "title": "Smart Web Refactor",
     "description": "Use large language models to intelligently refactor web content, remove ads and clean up clutter while maintaining interactive features",
     "githubButton": "View Source Code",
-    "chromeButton": "Chrome Store (Under Review)",
+    "chromeButton": "Install from Chrome Store",
     "features": "100% Local • Privacy Protected • Open Source"
   },
   "features": {
@@ -61,7 +61,7 @@
     "steps": {
       "install": {
         "title": "Install Extension",
-        "description": "Download from GitHub or wait for Chrome Store listing"
+        "description": "Install from Chrome Web Store or download from GitHub"
       },
       "configure": {
         "title": "Configure API",

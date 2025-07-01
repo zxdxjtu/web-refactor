@@ -4,7 +4,7 @@
     "title": "Smart Web Refactor",
     "description": "使用大语言模型智能重构网页内容，保持交互功能的同时移除广告、清理杂乱内容，专注于真正重要的信息",
     "githubButton": "查看开源代码",
-    "chromeButton": "Chrome 商店 (审核中)",
+    "chromeButton": "从 Chrome 商店安装",
     "features": "⭐ 100% 本地运行 • 🔒 保护隐私 • 🚀 开源免费"
   },
   "features": {
@@ -61,7 +61,7 @@
     "steps": {
       "install": {
         "title": "安装扩展",
-        "description": "从 GitHub 下载或等待 Chrome 商店上架"
+        "description": "从 Chrome 网上应用店安装或从 GitHub 下载"
       },
       "configure": {
         "title": "配置 API",

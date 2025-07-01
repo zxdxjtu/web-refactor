@@ -107,6 +107,27 @@ const Index = () => {
         </div>
       </div>
 
+      {/* Demo Video Section */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">产品演示 / Product Demo</h2>
+          <p className="text-lg text-gray-600">了解 Smart Web Refactor 如何智能重构网页内容</p>
+        </div>
+        <div className="max-w-4xl mx-auto">
+          <div className="relative" style={{ paddingBottom: '56.25%', height: 0 }}>
+            <iframe 
+              className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+              src="https://www.youtube.com/embed/NO3AQjaVkqQ?si=JuCHXyldTzZsYCTC" 
+              title="YouTube video player" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerPolicy="strict-origin-when-cross-origin" 
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Features Section */}
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">

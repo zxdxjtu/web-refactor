@@ -13,6 +13,12 @@
 
 Smart Web Refactor is a Chrome extension that leverages the power of Large Language Models (LLMs) to customize web page layouts according to your preferences. Remove ads, clean up clutter, focus on content that matters - all with simple natural language commands.
 
+### 🎬 Demo Video
+
+Watch how Smart Web Refactor works in action:
+
+[![Smart Web Refactor Demo](https://img.youtube.com/vi/NO3AQjaVkqQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=NO3AQjaVkqQ)
+
 ### 🚀 Key Features
 
 - **AI-Powered Content Modification**: Use OpenAI, Anthropic, or custom LLM APIs to intelligently reorganize web page layouts
@@ -21,7 +27,6 @@ Smart Web Refactor is a Chrome extension that leverages the power of Large Langu
 - **Focus Modes**: Built-in presets for reading mode, minimal layout, and ad-free browsing
 - **History & Templates**: Access your previous prompts and use common templates
 - **Multi-Language Support**: Available in English and Chinese
-- **Non-Destructive**: All changes are reversible with one-click restoration
 
 ### 📱 Use Cases
 
@@ -33,8 +38,8 @@ Smart Web Refactor is a Chrome extension that leverages the power of Large Langu
 
 ### 🛠 Installation
 
-#### Method 1: Chrome Web Store (Coming Soon)
-*The extension will be available on the Chrome Web Store soon.*
+#### Method 1: Chrome Web Store (Recommended)
+Install directly from the [Chrome Web Store](https://chrome.google.com/webstore/detail/onkhfhnipffijfmppkbhjkjaakflopbk)
 
 #### Method 2: Developer Mode Installation
 
@@ -144,6 +149,12 @@ Read our full [Privacy Policy](PRIVACY.md) for details.
 
 Smart Web Refactor 是一个 Chrome 扩展，利用大语言模型（LLM）的强大能力，根据你的喜好定制网页布局。移除广告、清理杂乱内容、专注于重要内容 - 只需简单的自然语言命令。
 
+### 🎬 演示视频
+
+观看 Smart Web Refactor 的实际操作演示：
+
+[![Smart Web Refactor 演示](https://img.youtube.com/vi/NO3AQjaVkqQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=NO3AQjaVkqQ)
+
 ### 🚀 主要特性
 
 - **AI 驱动的内容修改**: 使用 OpenAI、Anthropic 或自定义 LLM API 智能重组网页布局
@@ -152,7 +163,6 @@ Smart Web Refactor 是一个 Chrome 扩展，利用大语言模型（LLM）的�
 - **专注模式**: 内置阅读模式、最小化布局和无广告浏览预设
 - **历史记录和模板**: 访问你之前的提示词并使用常用模板
 - **多语言支持**: 支持中文和英文
-- **非破坏性**: 所有更改都可以一键撤销
 
 ### 📱 使用场景
 
@@ -164,8 +174,8 @@ Smart Web Refactor 是一个 Chrome 扩展，利用大语言模型（LLM）的�
 
 ### 🛠 安装方法
 
-#### 方式一：Chrome 网上应用店（即将推出）
-*扩展程序即将在 Chrome 网上应用店上线。*
+#### 方式一：Chrome 网上应用店（推荐）
+直接从 [Chrome 网上应用店](https://chrome.google.com/webstore/detail/onkhfhnipffijfmppkbhjkjaakflopbk) 安装
 
 #### 方式二：开发者模式安装
 
